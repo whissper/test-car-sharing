@@ -1,0 +1,223 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.4
+-- Dumped by pg_dump version 13.4
+
+-- Started on 2022-03-06 02:27:11
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2 (class 3079 OID 16384)
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 3019 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 205 (class 1259 OID 16413)
+-- Name: base_tax; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.base_tax (
+    id uuid NOT NULL,
+    period date NOT NULL,
+    value integer NOT NULL
+);
+
+
+ALTER TABLE public.base_tax OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16395)
+-- Name: cars; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cars (
+    id uuid NOT NULL,
+    registration_number text
+);
+
+
+ALTER TABLE public.cars OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 16418)
+-- Name: discounts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.discounts (
+    id uuid NOT NULL,
+    start_day smallint NOT NULL,
+    end_day smallint NOT NULL,
+    percent smallint NOT NULL
+);
+
+
+ALTER TABLE public.discounts OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16423)
+-- Name: maintenance_buffer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.maintenance_buffer (
+    id uuid NOT NULL,
+    period date NOT NULL,
+    days smallint NOT NULL
+);
+
+
+ALTER TABLE public.maintenance_buffer OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16403)
+-- Name: rent_sessions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.rent_sessions (
+    id uuid NOT NULL,
+    car_id uuid NOT NULL,
+    start date NOT NULL,
+    "end" date NOT NULL
+);
+
+
+ALTER TABLE public.rent_sessions OWNER TO postgres;
+
+--
+-- TOC entry 3011 (class 0 OID 16413)
+-- Dependencies: 205
+-- Data for Name: base_tax; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.base_tax (id, period, value) VALUES ('eb7fd8c7-9d72-9822-f30c-cca7ae4479d3', '2022-01-01', 100000);
+
+
+--
+-- TOC entry 3009 (class 0 OID 16395)
+-- Dependencies: 203
+-- Data for Name: cars; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.cars (id, registration_number) VALUES ('a1504389-d9fb-590e-6a4d-543149ca77d4', 'F111BD11');
+INSERT INTO public.cars (id, registration_number) VALUES ('17564640-499b-411d-d688-aec050ca94f3', 'G123FG71');
+INSERT INTO public.cars (id, registration_number) VALUES ('619d8161-c07f-a22f-f9b9-bcbc281df1dc', 'J321YU175');
+INSERT INTO public.cars (id, registration_number) VALUES ('3c872119-90c9-acd1-0044-019786ba37ed', 'J890YU175');
+INSERT INTO public.cars (id, registration_number) VALUES ('5f84aeba-3e4e-329d-1f52-5a9bb9befa04', 'M283LO199');
+
+
+--
+-- TOC entry 3012 (class 0 OID 16418)
+-- Dependencies: 206
+-- Data for Name: discounts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.discounts (id, start_day, end_day, percent) VALUES ('81ff1f7a-196e-f54a-57ca-7121a296d33c', 1, 4, 0);
+INSERT INTO public.discounts (id, start_day, end_day, percent) VALUES ('996366a6-4d4d-c1c4-5eca-8c5e3c2a13c6', 5, 9, 5);
+INSERT INTO public.discounts (id, start_day, end_day, percent) VALUES ('9554132c-8c2d-d583-9ba2-59214ca1e422', 10, 17, 10);
+INSERT INTO public.discounts (id, start_day, end_day, percent) VALUES ('b84053a0-86b0-aa7b-1c20-f1d5c0926472', 18, 30, 15);
+
+
+--
+-- TOC entry 3013 (class 0 OID 16423)
+-- Dependencies: 207
+-- Data for Name: maintenance_buffer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.maintenance_buffer (id, period, days) VALUES ('bd23b9de-6701-1966-2506-1fd3cb1e308b', '2022-01-01', 3);
+
+
+--
+-- TOC entry 3010 (class 0 OID 16403)
+-- Dependencies: 204
+-- Data for Name: rent_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2873 (class 2606 OID 16417)
+-- Name: base_tax base_tax_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.base_tax
+    ADD CONSTRAINT base_tax_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2869 (class 2606 OID 16402)
+-- Name: cars cars_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cars
+    ADD CONSTRAINT cars_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2875 (class 2606 OID 16422)
+-- Name: discounts discounts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.discounts
+    ADD CONSTRAINT discounts_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2877 (class 2606 OID 16427)
+-- Name: maintenance_buffer maintenance_buffer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.maintenance_buffer
+    ADD CONSTRAINT maintenance_buffer_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2871 (class 2606 OID 16407)
+-- Name: rent_sessions rent_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rent_sessions
+    ADD CONSTRAINT rent_sessions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2878 (class 2606 OID 16408)
+-- Name: rent_sessions car_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rent_sessions
+    ADD CONSTRAINT car_id FOREIGN KEY (car_id) REFERENCES public.cars(id) NOT VALID;
+
+
+-- Completed on 2022-03-06 02:27:12
+
+--
+-- PostgreSQL database dump complete
+--
+
