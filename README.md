@@ -1,5 +1,5 @@
 # test-car-sharing
-test-car-sharing (simple service)
+test-car-sharing (simple NodeJS service)
 
 ## Тестовое задание "Расчет стоимости аренды автомобилей"
 
